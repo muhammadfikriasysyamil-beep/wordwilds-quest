@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wordwilds Quest – Struktur Game, Rubrik &amp; Self-Assessment</title>
+<style>
+:root{
+  --bg:#fcf9ee;--sf:#ffffff;--sf2:#f4f0df;--tx:#2c220e;--mu:#685b3f;--ln:#e2dac0;
+  --forest:#175620;--forest-mid:#2e8b3a;--forest-lt:#e6f4e8;
+  --red-brand:#d32f2f;
+  /* Warna Kartu sesuai Brosur */
+  --blue-1:#2196f3;--blue-2:#1565c0;--blue-3:#0d47a1;--blue-bg:#e8f3fc;
+  --gold-1:#f4c430;--gold-2:#d99b00;--gold-3:#9c6b00;--gold-bg:#fdf6dc;
+  --red-1:#ef5350;--red-2:#d32f2f;--red-3:#8e1919;--red-bg:#fdeaea;
+  --green-1:#4caf50;--green-2:#2e7d32;--green-3:#144d18;--green-bg:#e7f5e8;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121f10;--sf:#1b2c18;--sf2:#23371f;--tx:#f3eedb;--mu:#b8b094;--ln:#374931;
+    --forest:#81c784;--forest-mid:#5fc06b;--forest-lt:#1e3620;
+    --red-brand:#ff7870;
+    --blue-bg:#182b3d;--gold-bg:#382f14;--red-bg:#3b1c1b;--green-bg:#19331d;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 14px 52px}
+main{max-width:920px;margin:0 auto}
+
+/* Header & Banner ala Brosur */
+header{
+  background:linear-gradient(135deg,#175620 0%,#267330 65%,#388e3c 100%);
+  color:#fff;
+  border-radius:0 0 18px 18px;
+  padding:24px 20px 22px;
+  margin-bottom:10px;
+  box-shadow:0 4px 14px rgba(23,86,32,.18);
+  border-bottom:4px solid #f4c430;
+}
+.eyebrow{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px}
+h1{font:900 clamp(28px,6.5vw,40px)/1.05 "Arial Black",Impact,system-ui,sans-serif;letter-spacing:.5px;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+h1 span{color:#ffeb3b}
+.lead{color:#eaf7ec;margin-top:8px;font-size:14.5px;max-width:720px}
+
+h2{font:800 19.5px/1.25 "Arial Black",system-ui,sans-serif;color:var(--forest);margin:30px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .num-pill{background:var(--forest);color:#fff;font-size:13px;padding:2px 9px;border-radius:6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2 .num-pill{color:#0f1d0d}}
+h3{font-size:16px;margin-top:16px;color:var(--forest)}
+.sub{color:var(--mu);font-size:13.5px;margin-bottom:12px}
+.note{font-size:13px;color:var(--mu);margin:8px 0}
+
+/* Cards Kategori ala Kartu Brosur */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;margin-bottom:14px}
+.card{background:var(--sf);border:2px solid var(--c);border-top-width:7px;border-radius:12px;padding:13px 15px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.card h3{color:var(--c);margin:0;font-size:16.5px}
+.pill-color{font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--c-bg);color:var(--c)}
+.card dl{display:grid;grid-template-columns:86px 1fr;gap:4px 10px;margin-top:6px;font-size:13.5px}
+.card dt{font-weight:700;color:var(--mu)}
+.card dd{margin:0}
+.q{font-style:italic}
+
+/* Tables */
+.wrap{overflow-x:auto;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--ln);background:var(--sf)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13.5px}
+th,td{border:1px solid var(--ln);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#175620;color:#fff;font-weight:700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) th{background:#264623;color:#bfe8c4}}
+.lv{font-weight:800;white-space:nowrap}
+.star{color:#e09f00;letter-spacing:1px}
+.cat-b{color:var(--blue-2);font-weight:800}
+.cat-y{color:var(--gold-2);font-weight:800}
+.cat-r{color:var(--red-2);font-weight:800}
+.cat-gr{color:var(--green-2);font-weight:800}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .cat-b{color:#64b5f6}
+  :root:not([data-theme="light"]) .cat-y{color:#ffd54f}
+  :root:not([data-theme="light"]) .cat-r{color:#ff8a80}
+  :root:not([data-theme="light"]) .cat-gr{color:#81c784}
+}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:800}
+.b-ok{background:var(--green-bg);color:var(--green-2)}
+.b-hd{background:var(--gold-bg);color:var(--gold-3)}
+.b-no{background:var(--red-bg);color:var(--red-2)}
+ul.tight{padding-left:18px;margin:2px 0}
+ul.tight li{margin-bottom:3px}
+
+/* Self Assessment */
+.meta-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:12px;margin-bottom:12px}
+.meta-box label{display:flex;flex-direction:column;font-size:12.5px;font-weight:700;color:var(--mu);gap:4px}
+.meta-box input{padding:7px 9px;font:14px inherit;border:1px solid var(--ln);border-radius:6px;background:var(--bg);color:var(--tx)}
+
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.tab{padding:8px 14px;border-radius:9px;border:2px solid var(--ln);background:var(--sf);color:var(--tx);font-weight:800;cursor:pointer;font-size:14px}
+.tab.active{background:#175620;border-color:#175620;color:#fff}
+.tab .cnt{font-size:12px;opacity:.88;margin-left:4px}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--sf2);border:1px solid var(--ln);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:13px}
+.leg-item{display:flex;align-items:center;gap:5px;font-weight:600}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid var(--ln)}
+.dot.ok{background:var(--forest-mid);border-color:var(--forest-mid)}
+.dot.hd{background:var(--gold-1);border-color:var(--gold-2)}
+.dot.no{background:var(--red-2);border-color:var(--red-2)}
+
+.sa-card{background:var(--sf);border:1.5px solid var(--ln);border-left:7px solid var(--c);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.sa-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.sa-title{font-weight:800;font-size:15.5px;color:var(--c)}
+.sa-stat{font-size:13px;font-weight:700;color:var(--mu)}
+.num-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:5px;margin-bottom:8px}
+.num-btn{height:34px;border-radius:6px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:700 13px inherit;cursor:pointer;padding:0;transition:transform .05s}
+.num-btn:active{transform:scale(.95)}
+.num-btn[data-s="1"]{background:var(--forest-mid);border-color:var(--forest-mid);color:#fff}
+.num-btn[data-s="2"]{background:var(--gold-1);border-color:var(--gold-2);color:#261a00}
+.num-btn[data-s="3"]{background:var(--red-2);border-color:var(--red-2);color:#fff}
+.sa-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 12px;font-size:12.5px;padding-top:6px;border-top:1px dashed var(--ln);color:var(--mu)}
+.sa-detail span b{color:var(--tx)}
+
+/* Board Token Calculator */
+.token-box{background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:12px 14px;margin-top:12px}
+.token-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:8px}
+.token-item{background:var(--sf2);border:1px solid var(--ln);border-radius:8px;padding:7px 9px;font-size:12.5px;display:flex;flex-direction:column;gap:4px}
+.token-item label{font-weight:700;color:var(--tx)}
+.token-item input{width:100%;padding:5px 7px;font:14px inherit;border:1px solid var(--ln);border-radius:5px;background:var(--sf);color:var(--tx);text-align:center}
+.token-res{margin-top:8px;font-size:14px;font-weight:800;color:var(--forest)}
+
+.res{background:var(--sf);border:2.5px solid var(--forest-mid);border-radius:12px;padding:14px 16px;margin-top:12px}
+.big{font:800 23px/1.15 "Arial Black",system-ui,sans-serif;color:var(--forest)}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin-top:10px}
+.res-lv{background:var(--sf2);border:1px solid var(--ln);border-radius:8px;padding:8px 10px;font-size:13px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button.act{font:inherit;font-weight:700;padding:9px 15px;border-radius:8px;border:2px solid #175620;background:#175620;color:#fff;cursor:pointer}
+button.act.alt{background:transparent;color:var(--forest);border-color:var(--forest)}
+
+.print-only{display:none}
+@media print{
+  body{padding:0;background:#fff;color:#000}
+  header{background:#175620 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0}
+  .tabs,.legend,.num-grid,.row,.no-print{display:none !important}
+  .print-only{display:block}
+  .sa-card{break-inside:avoid;border:1px solid #ccc;border-left:5px solid var(--c)}
+  .sa-card.empty-print{display:none}
+  .wrap{border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="eyebrow">Board Game Guidelines &amp; Teacher Rubric</div>
+  <h1>WORDWILDS <span>QUEST</span></h1>
+  <p class="lead">Pemetaan konstruksi soal (300 kartu), tingkat kesulitan per level, kriteria keberhasilan permainan, dan lembar self-assessment detail untuk pemain &amp; guru pendamping.</p>
+</header>
+
+<h2><span class="num-pill">1</span> Pemetaan Kategori &amp; Konstruksi Penyusunan Soal</h2>
+<p class="sub">Permainan memiliki 4 jenis kartu warna. Setiap kategori memuat <b>25 kartu di tiap level</b> (total 75 kartu per kategori, 300 kartu keseluruhan).</p>
+
+<div class="grid-2">
+  <div class="card" style="--c:var(--blue-2);--c-bg:var(--blue-bg)">
+    <div class="card-head">
+      <h3>Say &amp; Spell / Describe &amp; Deliver</h3>
+      <span class="pill-color">Kartu Biru</span>
+    </div>
+    <dl>
+      <dt>Fokus Skill</dt><dd>Speaking, aktivasi kosakata, kesadaran ejaan (spelling), dan pemaparan gagasan lisan.</dd>
+      <dt>Alur Level</dt><dd><b>Basic &amp; Intermediate (Say &amp; Spell):</b> menebak objek, menyebutkan contoh tematik, dan mengeja kata. <b>Advanced (Describe &amp; Deliver):</b> mendeskripsikan konsep, analisis kritis, dan <i>pitching</i> persuasif.</dd>
+      <dt>Kriteria</dt><dd>Jawaban sesuai pertanyaan, kosakata tepat, dan instruksi ejaan/pemaparan diikuti dengan benar.</dd>
+    </dl>
+  </div>
+
+  <div class="card" style="--c:var(--gold-2);--c-bg:var(--gold-bg)">
+    <div class="card-head">
+      <h3>Write &amp; Right</h3>
+      <span class="pill-color">Kartu Kuning</span>
+    </div>
+    <dl>
+      <dt>Fokus Skill</dt><dd>Writing, akurasi ejaan tulis, dan penguasaan tata bahasa (<i>tenses</i> &amp; sintaksis).</dd>
+      <dt>Alur Level</dt><dd><b>Basic:</b> terjemahan kata/kalimat sederhana. <b>Intermediate:</b> produksi, terjemahan, &amp; identifikasi 5 <i>tense</i> dasar. <b>Advanced:</b> transformasi struktur lanjut (<i>passive, conditional, cleft,</i> inversi).</dd>
+      <dt>Kriteria</dt><dd>Jawaban tertulis memiliki makna tepat, ejaan benar, dan struktur gramatika sesuai instruksi.</dd>
+    </dl>
+  </div>
+
+  <div class="card" style="--c:var(--red-2);--c-bg:var(--red-bg)">
+    <div class="card-head">
+      <h3>Read &amp; Respond</h3>
+      <span class="pill-color">Kartu Merah</span>
+    </div>
+    <dl>
+      <dt>Fokus Skill</dt><dd>Reading aloud, artikulasi bunyi, kelancaran membaca (<i>fluency</i>), dan pemahaman bacaan.</dd>
+      <dt>Alur Level</dt><dd><b>Basic:</b> membaca teks pendek 3 kalimat &amp; menjawab pertanyaan literal. <b>Intermediate:</b> melafalkan <i>tongue twister</i> &amp; cerita pendek. <b>Advanced:</b> memaknai idiom, <i>tongue twister</i> kompleks, &amp; parafrase teks analitis.</dd>
+      <dt>Kriteria</dt><dd>Membaca nyaring dengan jelas dan tepat serta mampu menjelaskan/menjawab isi bacaan.</dd>
+    </dl>
+  </div>
+
+  <div class="card" style="--c:var(--green-2);--c-bg:var(--green-bg)">
+    <div class="card-head">
+      <h3>Role &amp; Action <span style="font-weight:400;font-size:13px">(Move / Express &amp; Explain)</span></h3>
+      <span class="pill-color">Kartu Hijau</span>
+    </div>
+    <dl>
+      <dt>Fokus Skill</dt><dd>Pemahaman reseptif-kinestetik (TPR), ekspresi pragmatik, dan speaking berbasis simulasi peran.</dd>
+      <dt>Alur Level</dt><dd><b>Basic:</b> gerakan fisik, menunjuk warna, &amp; menirukan hewan. <b>Intermediate:</b> peragaan 25 ekspresi emosi + ujaran spontan. <b>Advanced:</b> <i>role-play</i> improvisasi berbasis profesi dan situasi krisis.</dd>
+      <dt>Kriteria</dt><dd>Gerakan, mimik, atau peran sesuai instruksi dan disampaikan dengan bahasa Inggris yang relevan.</dd>
+    </dl>
+  </div>
+</div>
+
+<h3>Matriks Distribusi Nomor Kartu per Kategori &amp; Level (#1–#25)</h3>
+<p class="sub">Pemetaan tipe butir soal nomor 1–25 berdasarkan bank kartu permainan <i>Wordwilds Quest</i>.</p>
+<div class="wrap">
+  <table>
+    <tr>
+      <th style="width:17%">Kategori</th>
+      <th style="width:27%"><span class="star">★</span> Basic (#1–#25)</th>
+      <th style="width:28%"><span class="star">★★</span> Intermediate (#1–#25)</th>
+      <th style="width:28%"><span class="star">★★★</span> Advanced (#1–#25)</th>
+    </tr>
+    <tr>
+      <td class="cat-b">Say &amp; Spell /<br>Describe &amp; Deliver</td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#2, #8, #23–#24:</b> Identitas/preferensi diri + mengeja kata.</li>
+          <li><b>#3–#7, #9–#10, #25:</b> Tebak benda/hewan/warna dari ciri sederhana + mengeja.</li>
+          <li><b>#11–#22:</b> Mengeja langsung 12 kosakata target (<i>FISH, YELLOW, CAMERA, DOLPHIN,</i> dll.).</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#25:</b> Menyebutkan <b>1–3 contoh/item</b> sesuai kategori topik (kepribadian, barang traveling, profesi, pemimpin, kebiasaan sehat, keterampilan karier) lalu mengeja kata kuncinya.</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#7, #19, #21:</b> Deskripsi naratif &amp; sensoris mendalam (negara, ruang tenang, <i>life story</i> benda, musik).</li>
+          <li><b>#8–#11, #13–#14, #17–#18, #20, #22, #24–#25:</b> Analisis kritis, dilema etika, tradisi budaya, &amp; argumen kontra 90 detik.</li>
+          <li><b>#12, #15–#16, #23:</b> <i>Elevator pitch</i> persuasif (aplikasi, kota wisata, <i>digital detox</i>, produk unik).</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td class="cat-y">Write &amp; Right</td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#16:</b> Padanan kosakata &amp; frasa dasar Bahasa Indonesia–Inggris dalam konteks kalimat (<i>apple, mango, morning, kitchen, curly hair</i>).</li>
+          <li><b>#17–#25:</b> Menerjemahkan 9 kalimat deklaratif sederhana (<i>I love you, I have a red car, Mother is cooking</i>).</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#5:</b> Membuat kalimat mandiri dengan 5 <i>tense</i> dasar (<i>Simple Present, Continuous, Past, Future, Present Perfect</i>).</li>
+          <li><b>#6–#12:</b> Terjemahan Indonesia → Inggris + identifikasi <i>tense</i>.</li>
+          <li><b>#13–#19:</b> Melengkapi <i>verb form</i> rumpang + menyebutkan <i>tense</i>.</li>
+          <li><b>#20–#25:</b> Terjemahan Inggris → Indonesia + identifikasi <i>tense</i>.</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#2, #5–#6, #9, #12, #17, #23:</b> Menulis 3 bentuk kalimat (+, –, ?) pada <i>tense</i> lanjut (<i>Past Perfect, Future Continuous/Perfect</i>).</li>
+          <li><b>#3–#4, #10, #16, #25:</b> Transformasi <i>Active ↔ Passive</i> (termasuk <i>impersonal passive</i> &amp; inversi).</li>
+          <li><b>#7–#8, #11, #13–#15, #18–#22, #24:</b> Sintaksis lanjut (<i>mixed conditional, causative, cleft sentence, participle clause, mandative subjunctive</i>).</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td class="cat-r">Read &amp; Respond</td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#11:</b> Membaca nyaring cerita mikro (3 kalimat, ±20–30 kata) + menjawab 1 pertanyaan fakta (<i>Who, What, Where, When, How</i>).</li>
+          <li><b>#12–#25:</b> Membaca nyaring 14 teks cerita keseharian (3 kalimat) dan menjawab pertanyaan pemahaman isi cerita.</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#6 &amp; #19–#25:</b> Membaca nyaring <b>13 <i>tongue twister</i></b> klasik untuk melatih ketepatan artikulasi bunyi.</li>
+          <li><b>#7–#18:</b> Membaca nyaring <b>12 cerita pendek</b> (±35–50 kata) tentang empati, pendidikan, dan kebiasaan baik, lalu merangkum isinya.</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1, #4, #7, #10, #13, #16, #18, #21, #24:</b> Menjelaskan makna, citra/asal-usul, &amp; contoh <b>9 idiom lanjut</b> (<i>Pyrrhic victory, tilt at windmills</i>).</li>
+          <li><b>#2, #6, #9, #12, #15, #19, #22, #25:</b> Membaca <b>8 <i>tongue twister</i> kompleks</b> + menjelaskan kontras bunyi/kosakata.</li>
+          <li><b>#3, #5, #8, #11, #14, #17, #20, #23:</b> Memparafrasekan &amp; menganalisis <b>8 bacaan analitis/sastra</b> ber-kosakata tinggi.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td class="cat-gr">Role &amp; Action</td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#4, #12–#16, #18–#20:</b> Perintah fisik tunggal (TPR: menyentuh anggota tubuh &amp; gerakan dasar).</li>
+          <li><b>#5–#11:</b> Mencari dan menyentuh/menunjuk benda sesuai warna di sekitar.</li>
+          <li><b>#17, #21–#25:</b> Menirukan gerakan &amp; suara hewan/karakter (<i>robot, penguin, bird, cat, elephant, lion</i>).</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#25:</b> Memeragakan <b>25 ekspresi emosi &amp; kondisi fisik</b> (<i>happy, sad, angry, surprised, scared, confused, proud, jealous, relieved,</i> dll.) disertai kalimat bahasa Inggris yang sesuai.</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="tight">
+          <li><b>#1–#25:</b> Simulasi <b><i>role-play</i> improvisasi</b> berbasis peran &amp; situasi kompleks (pelayan restoran eksperimental, bea cukai, detektif, mediator konflik, juru lelang, direktur PR krisis, profesor filsafat).</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h2><span class="num-pill">2</span> Pemetaan Level &amp; Rubrik Penilaian Guru</h2>
+<p class="sub">Pemetaan tingkat kesulitan bertumpu pada perkembangan tuntutan kognitif dan linguistik soal di atas. Rentang CEFR dan kosakata bersifat perkiraan pedagogis.</p>
+<div class="wrap">
+  <table>
+    <tr>
+      <th style="width:16%">Level Kartu</th>
+      <th style="width:18%">Estimasi CEFR &amp; Kosakata</th>
+      <th style="width:34%">Karakteristik Konstruksi Soal</th>
+      <th style="width:32%">Indikator Kesiapan Naik Level</th>
+    </tr>
+    <tr>
+      <td class="lv"><span class="star">★</span> Basic</td>
+      <td>Pra-A1 – A1<br>± 300–600 kata</td>
+      <td>Konteks konkret di sekitar pemain (benda kelas, warna, hewan, anggota tubuh). Fokus pada pengenalan kata tunggal, ejaan huruf alfabet, kalimat deklaratif 1 klausa, perintah fisik langsung, dan bacaan 3 kalimat.</td>
+      <td>Pemain mengenali dan mengeja kosakata dasar tanpa ragu, merespons perintah fisik dengan tepat, serta menjawab pertanyaan fakta bacaan secara mandiri.</td>
+    </tr>
+    <tr>
+      <td class="lv"><span class="star">★★</span> Intermediate</td>
+      <td>A2 – B1<br>± 1.000–2.000 kata</td>
+      <td>Menghubungkan ide dan konteks sosial. Fokus pada enumerasi kosakata tematik, pembedaan 5 <i>tense</i> dasar, artikulasi (<i>tongue twister</i>), pemahaman alur cerita pendek, dan ekspresi emosi disertai ujaran spontan.</td>
+      <td>Pemain konsisten membedakan bentuk dan fungsi 5 <i>tense</i> dasar, melafalkan <i>tongue twister</i> dengan cukup jelas, serta mampu menjelaskan ide/ekspresi tanpa terpaku teks.</td>
+    </tr>
+    <tr>
+      <td class="lv"><span class="star">★★★</span> Advanced</td>
+      <td>B2 – C1<br>± 3.000–5.000+ kata</td>
+      <td>Konteks abstrak, hipotetis, dan persuasif. Fokus pada struktur gramatika kompleks (inversi, <i>cleft, subjunctive, passive</i>), idiom, parafrase teks ber-kosakata tinggi, argumentasi terstruktur, dan improvisasi peran.</td>
+      <td>Pemain mampu berargumen, memparafrasekan teks kompleks, memakai struktur lanjut secara akurat, dan berimprovisasi secara alami dalam interaksi peran.</td>
+    </tr>
+  </table>
+</div>
+
+<h3>Rubrik Kriteria Pencatatan (Menjembatani Token Papan &amp; Evaluasi Belajar)</h3>
+<p class="sub">Pada papan permainan, tantangan yang selesai dengan bantuan tetap dihitung <b>Berhasil</b> untuk perolehan token, namun pada asesmen guru dicatat sebagai <b>Sulit</b> agar terpetakan untuk latihan ulang.</p>
+<div class="wrap">
+  <table>
+    <tr>
+      <th style="width:16%">Status Kartu</th>
+      <th style="width:8%">Bobot</th>
+      <th style="width:38%">Kartu Lisan, Bacaan &amp; Peran<br>(Biru, Merah, Hijau)</th>
+      <th style="width:38%">Kartu Tulis &amp; Tata Bahasa<br>(Kuning – Write &amp; Right)</th>
+    </tr>
+    <tr>
+      <td><span class="badge b-ok">Benar</span></td>
+      <td><b>1,0</b></td>
+      <td>Mengeja kata, membaca nyaring, menjawab pertanyaan bacaan, atau memeragakan peran dengan tepat, jelas, dan sesuai instruksi kartu <b>secara mandiri tanpa bantuan</b>.</td>
+      <td>Menuliskan padanan kata/kalimat dengan ejaan tepat, makna sesuai, dan struktur <i>tense</i>/gramatika yang diminta <b>tanpa bantuan</b>.</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-hd">Sulit</span></td>
+      <td><b>0,5</b></td>
+      <td>Tantangan terselesaikan, tetapi memerlukan <b>pancingan/bantuan</b> pendamping, pengulangan bacaan/ejaan, atau terdapat kesalahan pelafalan/pemahaman minor.</td>
+      <td>Makna kalimat dapat dipahami, tetapi masih terdapat <b>kesalahan ejaan/tense</b> atau baru benar setelah mendapat petunjuk struktur dari guru/teman.</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-no">Tidak Terjawab</span></td>
+      <td><b>0,0</b></td>
+      <td>Tidak merespons, melewati kartu, atau jawaban/peragaan tidak sesuai dengan pertanyaan maupun perintah pada kartu.</td>
+      <td>Tidak menuliskan jawaban, melewati kartu, atau tulisan tidak membentuk makna maupun struktur gramatika yang diminta soal.</td>
+    </tr>
+  </table>
+</div>
+
+<h2><span class="num-pill">3</span> Self-Assessment Detail (Per Level, Kategori &amp; Nomor Kartu)</h2>
+<p class="sub">Pilih tab level yang dimainkan, lalu <b>klik nomor kartu (1–25)</b> yang diambil pemain pada tiap kategori. Nomor soal dan skor otomatis terekap.</p>
+
+<div class="meta-box">
+  <label>Nama Pemain / Kelompok
+    <input type="text" id="p-name" placeholder="Contoh: Kelompok 2 / Raka">
+  </label>
+  <label>Guru Pendamping / Penilai
+    <input type="text" id="p-teacher" placeholder="Nama guru / self-check">
+  </label>
+  <label>Tanggal Bermain
+    <input type="date" id="p-date">
+  </label>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Pilih Level Kartu">
+  <button type="button" class="tab active" data-lv="Basic">★ Level Basic <span class="cnt" id="cnt-Basic">(0)</span></button>
+  <button type="button" class="tab" data-lv="Intermediate">★★ Level Intermediate <span class="cnt" id="cnt-Intermediate">(0)</span></button>
+  <button type="button" class="tab" data-lv="Advanced">★★★ Level Advanced <span class="cnt" id="cnt-Advanced">(0)</span></button>
+</div>
+
+<div class="legend">
+  <span style="font-weight:700">Cara klik nomor kartu:</span>
+  <span class="leg-item"><i class="dot ok"></i> 1× Klik = Benar</span>
+  <span class="leg-item"><i class="dot hd"></i> 2× Klik = Sulit</span>
+  <span class="leg-item"><i class="dot no"></i> 3× Klik = Tidak Terjawab</span>
+  <span class="leg-item"><i class="dot"></i> 4× Klik = Batal</span>
+</div>
+
+<div id="sa-container"></div>
+
+<p class="note">Rumus skor kompetensi tiap kategori = <b>(Benar + ½ × Sulit) ÷ Didapat × 100</b>.</p>
+
+<div class="res" aria-live="polite">
+  <div class="big" id="tot">Pilih level &amp; klik nomor kartu yang didapat</div>
+  <p id="msg" style="margin-top:6px">Rekap nomor soal per kategori, skor tiap level, dan saran tindak lanjut akan muncul otomatis di sini.</p>
+  <div class="res-grid" id="lv-breakdown"></div>
+</div>
+
+<!-- Kalkulator Skor Token Papan Permainan (Sesuai Brosur Bagian C) -->
+<div class="token-box">
+  <div style="font-weight:800;color:var(--forest);font-size:14.5px">Kalkulator Skor Token Papan Permainan (Opsional – Sesuai Brosur)</div>
+  <div style="font-size:12.5px;color:var(--mu)">Konversi papan: <b>1 token = 10 poin</b> (Kotak biasa: +1 / -1 | Kotak burung: +2 / 0 | Kotak monyet: 0 / -2).</div>
+  <div class="token-grid">
+    <div class="token-item"><label for="tk-ok">Berhasil Kotak Biasa (+1)</label><input type="number" id="tk-ok" min="0" value="0"></div>
+    <div class="token-item"><label for="tk-no">Gagal Kotak Biasa (-1)</label><input type="number" id="tk-no" min="0" value="0"></div>
+    <div class="token-item"><label for="tk-bird">Berhasil Kotak Burung (+2)</label><input type="number" id="tk-bird" min="0" value="0"></div>
+    <div class="token-item"><label for="tk-monkey">Gagal Kotak Monyet (-2)</label><input type="number" id="tk-monkey" min="0" value="0"></div>
+  </div>
+  <div class="token-res" id="tk-out">Total Token Papan: 0 token (0 poin)</div>
+</div>
+
+<div class="row">
+  <button type="button" class="act" id="pr">Cetak / Simpan PDF</button>
+  <button type="button" class="act alt" id="rs-lv">Reset Level Ini</button>
+  <button type="button" class="act alt" id="rs-all">Kosongkan Semua</button>
+</div>
+
+<h2><span class="num-pill">4</span> Predikat Hasil &amp; Tindak Lanjut</h2>
+<div class="wrap">
+  <table>
+    <tr><th style="width:14%">Rentang Skor</th><th style="width:22%">Predikat</th><th>Makna &amp; Rekomendasi Latihan</th></tr>
+    <tr><td>85–100</td><td class="lv">Excellent</td><td>Menguasai kompetensi pada level ini. Pemain siap naik ke level kartu berikutnya atau menjadi pendamping sebaya.</td></tr>
+    <tr><td>70–84</td><td class="lv">Good</td><td>Berkembang baik. Ulangi nomor kartu yang bertanda <b>Sulit</b> sebelum berpindah ke level lebih tinggi.</td></tr>
+    <tr><td>50–69</td><td class="lv">Fair</td><td>Pemahaman dasar terbentuk, tetapi perlu latihan terarah pada nomor kartu yang <b>Sulit</b> dan <b>Tidak Terjawab</b>.</td></tr>
+    <tr><td>0–49</td><td class="lv">Needs Improvement</td><td>Membutuhkan pendampingan bertahap. Latih ulang kartu yang belum terjawab pada level ini atau turunkan level sementara.</td></tr>
+  </table>
+</div>
+<p class="note">Catatan: Skor rubrik mengukur capaian kemampuan berbahasa, sedangkan total token menentukan pemenang pada papan permainan.</p>
+</main>
+
+<script>
+(function(){
+  var LEVELS = ['Basic', 'Intermediate', 'Advanced'];
+  var STARS = {Basic:'★', Intermediate:'★★', Advanced:'★★★'};
+  var CATS = [
+    {id:'blue', name:'Say & Spell / Describe & Deliver (Kartu Biru)', color:'var(--blue-2)'},
+    {id:'yellow', name:'Write & Right (Kartu Kuning)', color:'var(--gold-2)'},
+    {id:'red', name:'Read & Respond (Kartu Merah)', color:'var(--red-2)'},
+    {id:'green', name:'Role & Action (Kartu Hijau)', color:'var(--green-2)'}
+  ];
+
+  var state = {};
+  LEVELS.forEach(function(lv){
+    state[lv] = {};
+    CATS.forEach(function(c){
+      state[lv][c.id] = new Array(25).fill(0);
+    });
+  });
+
+  var activeLv = 'Basic';
+  var container = document.getElementById('sa-container');
+
+  var dateEl = document.getElementById('p-date');
+  if(dateEl && !dateEl.value){
+    dateEl.value = new Date().toISOString().slice(0,10);
+  }
+
+  function pred(s){
+    return s>=85?'Excellent':s>=70?'Good':s>=50?'Fair':'Needs Improvement';
+  }
+
+  function fmtNums(arr){
+    return arr.length ? arr.map(function(n){return '#'+n;}).join(', ') : '–';
+  }
+
+  function renderCards(){
+    container.innerHTML = '';
+    LEVELS.forEach(function(lv){
+      var lvWrap = document.createElement('div');
+      lvWrap.className = 'lv-section';
+      lvWrap.dataset.lv = lv;
+      if(lv !== activeLv) lvWrap.style.display = 'none';
+
+      var printHdr = document.createElement('h3');
+      printHdr.className = 'print-only';
+      printHdr.style.margin = '14px 0 6px';
+      printHdr.textContent = 'Rekap ' + STARS[lv] + ' Level ' + lv;
+      lvWrap.appendChild(printHdr);
+
+      CATS.forEach(function(c){
+        var card = document.createElement('div');
+        card.className = 'sa-card';
+        card.id = 'card-' + lv + '-' + c.id;
+        card.style.setProperty('--c', c.color);
+
+        var head = document.createElement('div');
+        head.className = 'sa-head';
+        head.innerHTML = '<div class="sa-title">' + c.name + ' <span style="font-weight:600;font-size:13px;color:var(--mu)">(' + STARS[lv] + ' ' + lv + ')</span></div>' +
+                         '<div class="sa-stat" id="stat-' + lv + '-' + c.id + '">Didapat: 0 | Skor: –</div>';
+        card.appendChild(head);
+
+        var grid = document.createElement('div');
+        grid.className = 'num-grid';
+        for(var i=0; i<25; i++){
+          (function(idx){
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'num-btn';
+            btn.textContent = idx + 1;
+            btn.dataset.s = state[lv][c.id][idx];
+            btn.setAttribute('aria-label', c.name + ' ' + lv + ' nomor ' + (idx+1));
+            btn.onclick = function(){
+              state[lv][c.id][idx] = (state[lv][c.id][idx] + 1) % 4;
+              btn.dataset.s = state[lv][c.id][idx];
+              recalc();
+            };
+            grid.appendChild(btn);
+          })(i);
+        }
+        card.appendChild(grid);
+
+        var det = document.createElement('div');
+        det.className = 'sa-detail';
+        det.id = 'det-' + lv + '-' + c.id;
+        det.innerHTML = '<span>Benar (0): <b>–</b></span><span>Sulit (0): <b>–</b></span><span>Tidak terjawab (0): <b>–</b></span>';
+        card.appendChild(det);
+
+        lvWrap.appendChild(card);
+      });
+      container.appendChild(lvWrap);
+    });
+    recalc();
+  }
+
+  function recalc(){
+    var allScores = [];
+    var breakdownEl = document.getElementById('lv-breakdown');
+    breakdownEl.innerHTML = '';
+
+    LEVELS.forEach(function(lv){
+      var lvTotalCards = 0;
+      var lvScores = [];
+
+      CATS.forEach(function(c){
+        var arr = state[lv][c.id];
+        var ok = [], hd = [], no = [];
+        arr.forEach(function(val, idx){
+          if(val === 1) ok.push(idx + 1);
+          else if(val === 2) hd.push(idx + 1);
+          else if(val === 3) no.push(idx + 1);
+        });
+
+        var got = ok.length + hd.length + no.length;
+        lvTotalCards += got;
+
+        var statEl = document.getElementById('stat-' + lv + '-' + c.id);
+        var detEl = document.getElementById('det-' + lv + '-' + c.id);
+        var cardEl = document.getElementById('card-' + lv + '-' + c.id);
+
+        if(got === 0){
+          statEl.textContent = 'Didapat: 0 | Skor: –';
+          detEl.innerHTML = '<span>Benar (0): <b>–</b></span><span>Sulit (0): <b>–</b></span><span>Tidak terjawab (0): <b>–</b></span>';
+          cardEl.classList.add('empty-print');
+        } else {
+          cardEl.classList.remove('empty-print');
+          var sc = Math.round(((ok.length + hd.length * 0.5) / got) * 100);
+          statEl.textContent = 'Didapat: ' + got + ' | Skor: ' + sc + ' (' + pred(sc) + ')';
+          detEl.innerHTML =
+            '<span>Benar (' + ok.length + '): <b>' + fmtNums(ok) + '</b></span>' +
+            '<span>Sulit (' + hd.length + '): <b>' + fmtNums(hd) + '</b></span>' +
+            '<span>Tidak terjawab (' + no.length + '): <b>' + fmtNums(no) + '</b></span>';
+          var entry = {lv: lv, cat: c.name.split(' (')[0], sc: sc, got: got, review: hd.concat(no)};
+          lvScores.push(entry);
+          allScores.push(entry);
+        }
+      });
+
+      var cntBadge = document.getElementById('cnt-' + lv);
+      if(cntBadge) cntBadge.textContent = '(' + lvTotalCards + ')';
+
+      if(lvScores.length > 0){
+        var lvAvg = Math.round(lvScores.reduce(function(a,b){return a + b.sc;}, 0) / lvScores.length);
+        var box = document.createElement('div');
+        box.className = 'res-lv';
+        box.innerHTML = '<b>' + STARS[lv] + ' Level ' + lv + '</b> (' + lvTotalCards + ' kartu)<br>Rata-rata: <b>' + lvAvg + ' – ' + pred(lvAvg) + '</b>';
+        breakdownEl.appendChild(box);
+      }
+    });
+
+    var totEl = document.getElementById('tot');
+    var msgEl = document.getElementById('msg');
+
+    if(allScores.length === 0){
+      totEl.textContent = 'Belum ada kartu yang dipilih';
+      msgEl.textContent = 'Pilih tab level di atas dan klik nomor kartu (1–25) sesuai hasil permainan.';
+      return;
+    }
+
+    var overallAvg = Math.round(allScores.reduce(function(a,b){return a + b.sc;}, 0) / allScores.length);
+    var sorted = allScores.slice().sort(function(a,b){return a.sc - b.sc;});
+    var lowest = sorted[0];
+    var highest = sorted[sorted.length - 1];
+
+    totEl.textContent = 'Skor Rata-rata Kompetensi: ' + overallAvg + ' – ' + pred(overallAvg);
+
+    var advice = '';
+    if(allScores.length > 1){
+      advice += 'Terkuat: ' + highest.cat + ' [' + highest.lv + '] (' + highest.sc + '). ';
+      advice += 'Perlu diperkuat: ' + lowest.cat + ' [' + lowest.lv + '] (' + lowest.sc + '). ';
+    }
+    if(lowest.review.length > 0){
+      advice += 'Fokus ulangi kartu ' + fmtNums(lowest.review) + ' pada ' + lowest.cat + ' (' + lowest.lv + ').';
+    } else {
+      advice += 'Semua kartu pada kategori terendah sudah terjawab benar tanpa bantuan!';
+    }
+    msgEl.textContent = advice;
+  }
+
+  function calcToken(){
+    var ok = Math.max(0, parseInt(document.getElementById('tk-ok').value,10)||0);
+    var no = Math.max(0, parseInt(document.getElementById('tk-no').value,10)||0);
+    var bird = Math.max(0, parseInt(document.getElementById('tk-bird').value,10)||0);
+    var monkey = Math.max(0, parseInt(document.getElementById('tk-monkey').value,10)||0);
+    var tokens = (ok * 1) - (no * 1) + (bird * 2) - (monkey * 2);
+    var pts = tokens * 10;
+    document.getElementById('tk-out').textContent = 'Total Token Papan: ' + tokens + ' token (' + pts + ' poin)';
+  }
+  ['tk-ok','tk-no','tk-bird','tk-monkey'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', calcToken);
+  });
+
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.onclick = function(){
+      activeLv = tab.dataset.lv;
+      document.querySelectorAll('.tab').forEach(function(t){
+        t.classList.toggle('active', t.dataset.lv === activeLv);
+      });
+      document.querySelectorAll('.lv-section').forEach(function(sec){
+        sec.style.display = (sec.dataset.lv === activeLv) ? 'block' : 'none';
+      });
+    };
+  });
+
+  document.getElementById('pr').onclick = function(){
+    document.querySelectorAll('.lv-section').forEach(function(sec){
+      sec.style.display = 'block';
+    });
+    window.print();
+    document.querySelectorAll('.lv-section').forEach(function(sec){
+      sec.style.display = (sec.dataset.lv === activeLv) ? 'block' : 'none';
+    });
+  };
+
+  document.getElementById('rs-lv').onclick = function(){
+    CATS.forEach(function(c){ state[activeLv][c.id].fill(0); });
+    renderCards();
+  };
+
+  document.getElementById('rs-all').onclick = function(){
+    LEVELS.forEach(function(lv){
+      CATS.forEach(function(c){ state[lv][c.id].fill(0); });
+    });
+    ['tk-ok','tk-no','tk-bird','tk-monkey'].forEach(function(id){
+      document.getElementById(id).value = 0;
+    });
+    calcToken();
+    renderCards();
+  };
+
+  renderCards();
+})();
+</script>
+</body>
+</html>
